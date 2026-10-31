@@ -18,6 +18,10 @@ function adminClient() {
 const normalizePhone = (value: unknown) => String(value ?? "").replace(/[^0-9]/g, "");
 
 Deno.serve(async (req: Request) => {
+  const origin = req.headers.get("origin");
+  if (origin && origin !== "https://pakyoga-pjok.github.io") {
+    return json(403, { error: "Origin tidak diizinkan." });
+  }
   if (req.method === "OPTIONS") return new Response("ok", { headers: corsHeaders });
   if (req.method !== "POST") return json(405, { error: "Method not allowed" });
   if (!(req.headers.get("content-type") || "").toLowerCase().includes("application/json")) {
@@ -80,7 +84,7 @@ Deno.serve(async (req: Request) => {
       bucket: "payment-proofs",
       path,
       token: data.token,
-      expires_in_seconds: 120,
+      expires_in_seconds: 7200,
     });
   } catch (error) {
     console.error("create-proof-upload error:", error instanceof Error ? error.message : "unknown");
