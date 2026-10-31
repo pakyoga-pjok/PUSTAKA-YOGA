@@ -18,7 +18,7 @@ Kode fungsi ada di `supabase/functions/`.
 
 1. Jangan pernah menaruh `service_role` atau secret key di frontend, GitHub, atau HTML publik.
 2. Bucket `payment-proofs` harus tetap private. File bukti hanya dapat dibaca admin aktif.
-3. Edge Functions belum dideploy. Sebelum deployment, sesuaikan CORS ke origin website yang benar dan tetapkan konfigurasi JWT/public invocation dengan sengaja.
+3. Origin CORS sementara untuk GitHub Pages: `https://pakyoga-pjok.github.io` (origin tidak mencakup path `/PUSTAKA-YOGA/`). Edge Functions belum dideploy. Tetapkan konfigurasi JWT/public invocation dengan sengaja sebelum deployment.
 4. Terapkan pembatasan request untuk endpoint unggah dan konfirmasi bukti sebelum menerima trafik publik.
 5. Aktifkan leaked-password protection di Supabase Auth.
 6. Uji checkout, signed upload, konfirmasi bukti, RLS admin, dan penolakan akses anonim sebelum website dipublikasikan.
