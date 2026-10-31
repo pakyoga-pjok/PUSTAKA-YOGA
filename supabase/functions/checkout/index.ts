@@ -24,6 +24,10 @@ function getAdminClient() {
 }
 
 Deno.serve(async (req: Request) => {
+  const origin = req.headers.get("origin");
+  if (origin && origin !== "https://pakyoga-pjok.github.io") {
+    return json(403, { error: "Origin tidak diizinkan." });
+  }
   if (req.method === "OPTIONS") return new Response("ok", { headers: corsHeaders });
   if (req.method !== "POST") return json(405, { error: "Method not allowed" });
   if (!(req.headers.get("content-type") || "").toLowerCase().includes("application/json")) {
